@@ -1,13 +1,11 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 // import Currency from "react-currency-formatter"
 import React, { useState } from "react";
-import { urlFor } from "../sanity";
 import { MinusCircleIcon, PlusCircleIcon } from "react-native-heroicons/solid";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToBasket,
   removeFromBasket,
-  selectBasketItems,
   selectBasketItemsWithId,
 } from "../slices/basketSlice";
 

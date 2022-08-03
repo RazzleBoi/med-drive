@@ -7,6 +7,8 @@ const cors = require("cors");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/authentification");
 const stripeRoute = require("./routes/stripe");
+const medicineRoute = require("./routes/medicines");
+const drugstoreRoute = require("./routes/drugstores");
 
 
 
@@ -22,6 +24,8 @@ mongoose.connect(
 ).catch((err) => console.log(err));
 
 app.use("/api/users", userRoute);
+app.use("/api/medicines", medicineRoute);
+app.use("/api/drugstores", drugstoreRoute);
 app.use("/api/authentication", authRoute);
 app.use("/api/stripe", stripeRoute);
 

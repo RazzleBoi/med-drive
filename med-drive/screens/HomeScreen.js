@@ -17,19 +17,18 @@ import {
   SearchIcon,
   LogoutIcon,
 } from "react-native-heroicons/outline";
-import Categories from "../components/Categories";
-import FeaturedRow from "../components/FeaturedRow";
-import sanityClient from "../sanity";
 import { auth } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser, setUser } from "../slices/userSlice";
+import axios from "axios";
+import DrugStoreCard from "../components/DrugStoreCard";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [featuredCategories, setFeaturedCategories] = useState([]);
   const currentUser = useSelector(selectCurrentUser);
+  const [drugstores, setDrugstores] = useState([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -39,7 +38,6 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-      console.log(authUser);
       if (!authUser) {
         navigation.navigate("SignIn");
       } else {
@@ -52,26 +50,20 @@ const HomeScreen = () => {
         );
       }
     });
-
-    sanityClient
-      .fetch(
-        `
-      *[_type == "featured"] {
-        ...,
-        drugstores[]->{
-          ...,
-          meds[]->
-        }
-      }
-      `
-      )
-      .then((data) => {
-        setFeaturedCategories(data);
-      })
-      .catch((err) => {
-        Alert.alert(err.message);
-      });
     return unsubscribe;
+  });
+
+  useEffect(() => {
+    const getDrugstores = async () => {
+      try {
+        const res = await axios.get( "http://localhost:8080/api/drugstores");
+        setDrugstores(res.data);
+        console.log(drugstores[1].meds);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    getDrugstores();
   }, []);
 
   const logout = () => {
@@ -109,12 +101,6 @@ const HomeScreen = () => {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={logout}>
-            {/* <Image
-              source={{
-                uri: urlFor(imgUrl).url(),
-              }}
-              className="h-36 w-64 rounded-sm"
-            /> */}
             <LogoutIcon size={35} color="#00CCBB" />
           </TouchableOpacity>
         )}
@@ -127,20 +113,28 @@ const HomeScreen = () => {
         </View>
         <AdjustmentsIcon color="#00CCBB" />
       </View>
-      {/* content */}
-      <ScrollView className="bg-gray-100">
-        {/* CATEGORIES */}
-        <Categories />
-
-        {/* Featured Rows */}
-
-        {featuredCategories?.map((category) => (
-          <FeaturedRow
-            key={category._id}
-            id={category._id}
-            title={category.name}
-            description={category.short_description}
-          />
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 15,
+          paddingTop: 10,
+        }}
+        showsHorizontalScrollIndicator={false}
+        className="pt-4"
+      >
+        {drugstores.map(drugstore => (
+          <DrugStoreCard
+          key={drugstore._id}
+          id={drugstore._id}
+          imgUrl={drugstore.image}
+          address={drugstore.address}
+          title={drugstore.title}
+          meds={drugstore.meds}
+          rating={drugstore.rating}
+          short_description={drugstore.short_description}
+          genre={drugstore.type?.name}
+          long={drugstore.long}
+          lat={drugstore.lat}
+        />
         ))}
       </ScrollView>
     </SafeAreaView>

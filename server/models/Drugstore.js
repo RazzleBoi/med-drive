@@ -9,9 +9,9 @@ const drugstoreSchema = new mongoose.Schema(
         lat: {type: Number, required: true, unique: true},
         image: {type: String},
         rating: {type: Number},
-        meds: [{type: Schema.Types.ObjectId, ref: 'Medicine'}],
+        meds: [{type: mongoose.Schema.Types.ObjectId, ref: 'Medicine'}],
     },
     {timestamps: true}
 );
 
-module.exports = model("Drugstore", drugstoreSchema);
+module.exports = mongoose.model("Drugstore", drugstoreSchema);

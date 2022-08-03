@@ -69,7 +69,7 @@ const BasketScreen = () => {
             >
               <Text>{items.length} x</Text>
               <Image
-                source={{ uri: urlFor(items[0]?.image).url() }}
+                source={{ uri: items[0]?.image }}
                 className="h-12 w-12 rounded-full"
               />
               <Text className="flex-1">{items[0]?.name}</Text>

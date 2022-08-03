@@ -1,7 +1,6 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useLayoutEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { urlFor } from "../sanity";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import {
   ChevronRightIcon,
@@ -58,7 +57,7 @@ const DrugStoreScreen = () => {
       <View className="relative">
         <Image
           source={{
-            uri: urlFor(imgUrl).url(),
+            uri: imgUrl
           }}
           className="w-full h-56 bg-gray-300 p-4"
         />
@@ -111,10 +110,10 @@ const DrugStoreScreen = () => {
           <MedicineRow
           key={med._id}
           id={med._id}
-          name={med.name}
+          name={med.title}
           description={med.short_description}
           price={med.price}
-          image={urlFor(med.image).url()}
+          image={med.image}
           />
          ))}
       </View>
