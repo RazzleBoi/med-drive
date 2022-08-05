@@ -46,7 +46,8 @@ const MainScreen = () => {
     if(!!currentUser){
     const getPacients = async () => {
       try {
-        const res = await userRequest(currentUser.accessToken).get( "http://localhost:8080/api/users/");
+        const res = await userRequest(currentUser.accessToken).get( "http://localhost:8080/api/pacients/", 
+                     { params: { doctor: currentUser._id}});
         setPacients(res.data);
         console.log(pacients);
       } catch (err) {
@@ -120,11 +121,11 @@ const MainScreen = () => {
       >
         {pacients.map(pacient => (
           <UserCard
-          key={pacient._id}
-          id={pacient._id}
-          address={pacient.address}
-          email={pacient.email}
-          username={pacient.username}
+          key={pacient.pacient._id}
+          id={pacient.pacient._id}
+          address={pacient.pacient.address}
+          email={pacient.pacient.email}
+          username={pacient.pacient.username}
         />
         ))}
       </ScrollView>

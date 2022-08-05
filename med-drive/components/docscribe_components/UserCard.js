@@ -28,7 +28,7 @@ const UserCard = ({
       <View className="px-3 pb-4 items-center">
         <Text className="font-bold text-lg pt-2" >{username}</Text>
         <View className="flex-row items-center space-x-1">
-          <EmojiHappyIcon color="light-blue" opacity={0.5} size={22}/>
+          <EmojiHappyIcon color="blue" opacity={0.5} size={22}/>
           <Text className="text-xs ">
             {email} 
           </Text>
