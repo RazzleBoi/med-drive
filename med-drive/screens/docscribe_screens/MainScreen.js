@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { userRequest } from "../../requestMethods";
 import { logoutCall } from "../../slices/apiCalls";
-import UserCard from "../../components/docscribe_components/UserCard";
+import PacientCard from "../../components/docscribe_components/PacientCard";
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -120,7 +120,7 @@ const MainScreen = () => {
         className="pt-4"
       >
         {pacients.map(pacient => (
-          <UserCard
+          <PacientCard
           key={pacient.pacient._id}
           id={pacient.pacient._id}
           address={pacient.pacient.address}

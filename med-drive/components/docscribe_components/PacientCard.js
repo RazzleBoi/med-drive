@@ -3,7 +3,7 @@ import React from 'react'
 import { EmojiHappyIcon, StarIcon, UserIcon } from 'react-native-heroicons/solid'
 import { LocationMarkerIcon } from 'react-native-heroicons/outline'
 import { useNavigation } from '@react-navigation/native'
-const UserCard = ({
+const PacientCard = ({
   id, 
   address,
   email,
@@ -43,4 +43,4 @@ const UserCard = ({
   )
 }
 
-export default UserCard
+export default PacientCard
