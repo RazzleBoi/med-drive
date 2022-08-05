@@ -31,8 +31,9 @@ export const logoutCall = async (dispatch) => {
 export const register = async (dispatch, user) => {
     try {
         const res = await publicRequest.post("authentication/register", user);
+        login(dispatch, user);
+        console.log(res);
     } catch (err) {
-        console.log(err);
-        alert(err.message);
+        console.log(err.message);
     }
 };

@@ -11,21 +11,39 @@ import React, { useState } from "react";
 import { UserCircleIcon } from "react-native-heroicons/solid";
 import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useTogglePasswordVisibility } from '../hooks/useTogglePasswordVisibility';
+import { useTogglePasswordVisibility } from "../hooks/useTogglePasswordVisibility";
 import { EyeIcon } from "react-native-heroicons/outline";
+import { useDispatch } from "react-redux";
+import { login, register } from "../slices/apiCalls";
 
 const RegisterScreen = () => {
   const navigator = useNavigation();
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
-  
-  
-  const register = () => {
+
+  const registerF = () => {
+    if (password != confirmPassword) {
+      Alert.alert("Passwords must match!");
+    } else {
+      register(dispatch, {
+        name: name,
+        email: email,
+        username: username,
+        password: password,
+      })
+      // .then(() => navigator.navigate("Home"))
+      .catch((err) => Alert.alert(err));
+      // .then(() => {
+      //   login(dispatch, {username, password}).then(() => navigator.navigate("Home"));
+      // }).catch((err) => Alert.alert(err));
+    }
   };
 
   return (
@@ -37,6 +55,15 @@ const RegisterScreen = () => {
       <UserCircleIcon size={200} color="#00CCBB" />
       <Text>SignInScreen</Text>
       <View>
+        <TextInput
+          className="w-60 h-10 bg-white border p-2 m-2 border-[#00CCBB]"
+          onChangeText={(text) => {
+            setUsername(text);
+          }}
+          placeholder="username"
+          type="text"
+          value={username}
+        />
         <TextInput
           className="w-60 h-10 bg-white border p-2 m-2 border-[#00CCBB]"
           onChangeText={(text) => {
@@ -57,32 +84,42 @@ const RegisterScreen = () => {
           autoCapitalize={"none"}
           value={email}
         />
-        <TextInput
-          className="w-60 h-10 bg-white border p-2 m-2 border-[#00CCBB]"
-          onChangeText={(text) => {
-            setImageUrl(text);
-          }}
-          placeholder="Profile photo URL (optional)"
-          type="text"
-          value={imageUrl}
-        />
-        <View className="h-10 w-60 items-fit flex-row bg-white border p-2 m-2 border-[#00CCBB]">
-        <TextInput
-          className="w-50"
-          placeholder="Password"
-          secureTextEntry={passwordVisibility}
-          type="password"
-          values={password}
-          onChangeText={(text) => setPassword(text)}
-        />
-        <TouchableOpacity className="mx-24" onPress={handlePasswordVisibility}>
-          <EyeIcon name={rightIcon} size={25} color="#00CCBB"/>
-        </TouchableOpacity>
+        <View className="h-10 w-60 items-center flex-row bg-white border p-2 m-2 border-[#00CCBB]">
+          <TextInput
+            className="w-50"
+            placeholder="Password"
+            secureTextEntry={passwordVisibility}
+            type="password"
+            values={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+          <TouchableOpacity
+            className="absolute inset-y-0 right-0"
+            onPress={handlePasswordVisibility}
+          >
+            <EyeIcon name={rightIcon} size={25} color="#00CCBB" />
+          </TouchableOpacity>
+        </View>
+        <View className="h-10 w-60 items-center flex-row bg-white border p-2 m-2 border-[#00CCBB]">
+          <TextInput
+            className="w-50"
+            placeholder="Confirm Password"
+            secureTextEntry={passwordVisibility}
+            type="password"
+            values={confirmPassword}
+            onChangeText={(text) => setConfirmPassword(text)}
+          />
+          <TouchableOpacity
+            className="absolute inset-y-0 right-0"
+            onPress={handlePasswordVisibility}
+          >
+            <EyeIcon name={rightIcon} size={25} color="#00CCBB" />
+          </TouchableOpacity>
         </View>
       </View>
       <TouchableOpacity
         className="bg-[#00CCBB] rounded p-2 m-2 w-20"
-        onPress={register}
+        onPress={registerF}
       >
         <Text>Register</Text>
       </TouchableOpacity>
