@@ -20,13 +20,6 @@ export const login = async (dispatch, user) => {
 
 export const logoutCall = async (dispatch) => {
     try {
-        // if (products.length !== 0) {
-        //     const hasCart = await publicRequest.get("cart/user/" + user._id);
-        //     if (hasCart.data === null)
-        //         await userRequest.post("cart", {userId: user._id, products: products});
-        //     else
-        //         await userRequest.put("cart/" + user._id, {id: user._id, products: products});
-        // }
         dispatch(logout());
     } catch (err) {
         console.log(err);
