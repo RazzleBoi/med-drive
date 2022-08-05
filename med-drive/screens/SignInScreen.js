@@ -1,5 +1,5 @@
 import { View, Text, StatusBar, TextInput, TouchableOpacity, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { UserCircleIcon } from 'react-native-heroicons/solid';
 import { KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -11,15 +11,11 @@ const SignInScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-  //     if (authUser) {
-  //       dispatch(setUser({email: authUser.email, displayName: authUser.displayName, photoUrl: authUser.photoURL}));
-  //       navigator.navigate("Home");
-  //     }
-  //   })
-  //   return unsubscribe;
-  // }, []);
+  useLayoutEffect(() => {
+    navigator.setOptions({
+      headerShown: false,
+    });
+  }, []);
 
   const signin = () => {
     login(dispatch, { email, password })
@@ -29,7 +25,7 @@ const SignInScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior='padding' className="flex-1 justify-items-center bg-white-300 items-center">
+    <KeyboardAvoidingView behavior='padding' className="flex-1 justify-items-center bg-white-300 items-center py-5">
       <StatusBar className="bg-[#00CCBB]"/>
       <UserCircleIcon size={200} color="#00CCBB" />
       <Text>SignInScreen</Text>

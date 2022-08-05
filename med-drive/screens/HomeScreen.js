@@ -35,6 +35,12 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
+    if(!currentUser) {
+      navigation.navigate("SignIn");
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
     const getDrugstores = async () => {
       try {
         const res = await userRequest(currentUser.accessToken).get( "http://localhost:8080/api/drugstores");
@@ -44,10 +50,10 @@ const HomeScreen = () => {
       }
     };
     getDrugstores();
-  }, []);
+  }, [currentUser]);
 
   const logout = () => {
-    dispatch(logoutCall(null));
+    logoutCall(dispatch);
   };
 
   return (
