@@ -23,7 +23,6 @@ const StripePaymentScreen = () => {
       const data = await response.json();
       if (!response.ok) return Alert.alert(data.message);
       const clientSecret = data.clientSecret;
-      console.log(clientSecret);
       const initSheet = await stripe.initPaymentSheet({
         paymentIntentClientSecret: clientSecret,
       });
