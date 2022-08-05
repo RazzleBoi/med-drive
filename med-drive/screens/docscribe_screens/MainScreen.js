@@ -16,16 +16,18 @@ import {
   AdjustmentsIcon,
   SearchIcon,
   LogoutIcon,
+  PlusIcon,
 } from "react-native-heroicons/outline";
 import { useDispatch, useSelector } from "react-redux";
-import DrugStoreCard from "../components/DrugStoreCard";
-import { publicRequest, userRequest } from "../requestMethods";
-import { logoutCall } from "../slices/apiCalls";
 
-const HomeScreen = () => {
+import { userRequest } from "../../requestMethods";
+import { logoutCall } from "../../slices/apiCalls";
+import UserCard from "../../components/docscribe_components/UserCard";
+
+const MainScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [drugstores, setDrugstores] = useState([]);
+  const [pacients, setPacients] = useState([]);
   const currentUser = useSelector((state) => state.user.currentUser);
 
   useLayoutEffect(() => {
@@ -41,15 +43,18 @@ const HomeScreen = () => {
   }, [currentUser]);
 
   useEffect(() => {
-    const getDrugstores = async () => {
+    if(!!currentUser){
+    const getPacients = async () => {
       try {
-        const res = await userRequest(currentUser.accessToken).get( "http://localhost:8080/api/drugstores");
-        setDrugstores(res.data);
+        const res = await userRequest(currentUser.accessToken).get( "http://localhost:8080/api/users/");
+        setPacients(res.data);
+        console.log(pacients);
       } catch (err) {
         console.log(err.message);
       }
     };
-    getDrugstores();
+    getPacients();
+    }
   }, [currentUser]);
 
   const logout = () => {
@@ -66,13 +71,9 @@ const HomeScreen = () => {
           className="h-7 w-7 bg-gray-300 p-4 rounded-full"
         />
         <View className="flex-1">
-          <Text className="font-bold text-gray-300 text-xs">Deliver now!</Text>
-          <Text className="font-bold text-gray-300 text-xs">
-            {" "}
-          </Text>
           <Text className="font-bold text-xl">
-            Current location
-            <ChevronDownIcon size={20} color="#00CCBB" />
+            Hello Doc
+            <PlusIcon size={20} color="#348CEB" />
           </Text>
         </View>
         {!currentUser ? (
@@ -81,11 +82,11 @@ const HomeScreen = () => {
               navigation.navigate("SignIn", {});
             }}
           >
-            <UserIcon size={35} color="#00CCBB" />
+            <UserIcon size={35} color="#348CEB" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={logout}>
-            <LogoutIcon size={35} color="#00CCBB" />
+            <LogoutIcon size={35} color="#348CEB" />
           </TouchableOpacity>
         )}
       </View>
@@ -93,19 +94,19 @@ const HomeScreen = () => {
       <View className="flex-row items-center space-x-2 pb-2 mx-4 px-1">
         <View className="flex-row space-x-1 flex-1 bg-gray-200 p-3">
           <SearchIcon color="grey" size={20} />
-          <TextInput placeholder="Meds or Drugstores" keyboardType="default" />
+          <TextInput placeholder="Search for a pacient" keyboardType="default" />
         </View>
-        <AdjustmentsIcon color="#00CCBB" />
+        <AdjustmentsIcon color="#348CEB" />
       </View>
-      <View>
+      <View className="items-center">
       {!!currentUser && currentUser.isDoctor ? (
         <TouchableOpacity
-        className="bg-[#348CEB] rounded p-2 m-2 w-60"
+        className="bg-[#00CCBB] rounded p-2 m-2 w-80 items-center"
         onPress={() => {
-          navigation.navigate('DocScribe');
+          navigation.navigate('Home');
         }}
         >
-          <Text>Go to Doc-scribe</Text>
+          <Text>Go to Med-drive</Text>
         </TouchableOpacity>
       ) : (<></>)}
       </View>
@@ -117,19 +118,13 @@ const HomeScreen = () => {
         showsHorizontalScrollIndicator={false}
         className="pt-4"
       >
-        {drugstores.map(drugstore => (
-          <DrugStoreCard
-          key={drugstore._id}
-          id={drugstore._id}
-          imgUrl={drugstore.image}
-          address={drugstore.address}
-          title={drugstore.title}
-          meds={drugstore.meds}
-          rating={drugstore.rating}
-          short_description={drugstore.short_description}
-          genre={drugstore.type?.name}
-          long={drugstore.long}
-          lat={drugstore.lat}
+        {pacients.map(pacient => (
+          <UserCard
+          key={pacient._id}
+          id={pacient._id}
+          address={pacient.address}
+          email={pacient.email}
+          username={pacient.username}
         />
         ))}
       </ScrollView>
@@ -137,4 +132,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default MainScreen;

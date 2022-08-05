@@ -13,6 +13,7 @@ import DeliveryScreen from "./screens/DeliveryScreen";
 import StripePaymentScreen from "./screens/StripePaymentScreen";
 import SignInScreen from "./screens/SignInScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import MainScreen from "./screens/docscribe_screens/MainScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default function App() {
           <TailwindProvider>
             <Stack.Navigator>
               <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="DocScribe" component={MainScreen} />
               <Stack.Screen
                 options={AuthScreensOptions}
                 name="SignIn" 
