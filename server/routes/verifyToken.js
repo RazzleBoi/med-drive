@@ -42,6 +42,18 @@ const verifyTokenAndAdmin = (req, res, next) => {
     });
 }
 
+const verifyTokenAndDoctor = (req, res, next) => {
+    verifyToken(req, res, () => {
+        console.log(req.user)
+        if(req.user.isDoctor) {
+            next();
+        }
+        else {
+            res.status(403).json("You are not allowed");
+        }
+    });
+}
 
 
-module.exports = {verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin};
+
+module.exports = {verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin, verifyTokenAndDoctor};

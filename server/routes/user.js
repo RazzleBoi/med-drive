@@ -1,4 +1,4 @@
-const {verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin} = require("./verifyToken");
+const {verifyTokenAndDoctor, verifyTokenAndAuthorization, verifyTokenAndAdmin} = require("./verifyToken");
 const CryptoJS = require("crypto-js");
 const router = require("express").Router();
 const User = require("../models/User");
@@ -72,7 +72,7 @@ router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
 
 
 // GET ALL USERS
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", verifyTokenAndDoctor,async (req, res) => {
     const query = req.query.new;
     try {
         const users = query ? await User.find({}, {password: false}).sort({_id: -1}).limit(5)
