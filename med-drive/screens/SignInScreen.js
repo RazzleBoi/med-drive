@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { UserCircleIcon } from 'react-native-heroicons/solid';
 import { KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { setUser } from '../slices/userSlice';
 import { useDispatch } from 'react-redux';
 import { login } from '../slices/apiCalls';
 const SignInScreen = () => {
@@ -23,7 +22,10 @@ const SignInScreen = () => {
   // }, []);
 
   const signin = () => {
-    login(dispatch, { email, password }).then(() => navigator.navigate("Home")).catch(() => Alert.alert());
+    login(dispatch, { email, password })
+    .then(() => {
+      navigator.navigate("Home");})
+    .catch((err) => Alert.alert(err.message));
   };
 
   return (

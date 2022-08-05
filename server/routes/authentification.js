@@ -26,9 +26,9 @@ router.post("/register", async (req, res) => {
 // LOGIN
 router.post("/login", async (req, res) => {
     try {
-        const user = await User.findOne({username: req.body.username});
+        const user = await User.findOne({email: req.body.email});
         if (!user) {
-            res.status(401).json("Username does not exist!");
+            res.status(401).json("Email does not exist!");
             return;
         }
 
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
         const pass = hashedPassword.toString(CryptoJS.enc.Utf8);
 
         if (pass !== req.body.password) {
-            res.status(401).json("Username and password do not match!");
+            res.status(401).json("Email and password do not match!");
 
             return;
         }

@@ -13,8 +13,7 @@ export const publicRequest = axios.create({
     baseURL: BASE_URL,
 });
 
-export const userRequest = () => {
-    const token =  useSelector((state) => state.user.currentUser);
+export const userRequest = (token) => {
     return axios.create({
     baseURL: BASE_URL,
     header: { token: `Bearer ${token}` },

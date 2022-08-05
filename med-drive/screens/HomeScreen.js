@@ -37,7 +37,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const getDrugstores = async () => {
       try {
-        const res = await userRequest.get( "http://localhost:8080/api/drugstores");
+        const res = await userRequest(currentUser.accessToken).get( "http://localhost:8080/api/drugstores");
         setDrugstores(res.data);
       } catch (err) {
         console.log(err.message);
