@@ -9,6 +9,7 @@ const authRoute = require("./routes/authentification");
 const stripeRoute = require("./routes/stripe");
 const medicineRoute = require("./routes/medicines");
 const drugstoreRoute = require("./routes/drugstores");
+const pacientsRoute = require("./routes/pacients");
 
 
 
@@ -29,6 +30,8 @@ mongoose.connect(
 app.use("/api/users", userRoute);
 app.use("/api/medicines", medicineRoute);
 app.use("/api/drugstores", drugstoreRoute);
+app.use("/api/pacients", pacientsRoute);
+
 app.use("/api/authentication", authRoute);
 app.use("/api/stripe", stripeRoute);
 
