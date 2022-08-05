@@ -14,6 +14,7 @@ import StripePaymentScreen from "./screens/StripePaymentScreen";
 import SignInScreen from "./screens/SignInScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import MainScreen from "./screens/docscribe_screens/MainScreen";
+import PacientScreen from "./screens/docscribe_screens/PacientScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ export default function App() {
                 name="Register" 
                 component={RegisterScreen} />
               <Stack.Screen name="DrugStore" component={DrugStoreScreen} />
+              <Stack.Screen name="Pacient" component={PacientScreen} />
               <Stack.Screen
                 name="Basket"
                 component={BasketScreen}

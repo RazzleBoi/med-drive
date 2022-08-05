@@ -8,18 +8,20 @@ const PacientCard = ({
   address,
   email,
   username,
+  prescribed_ingredients,
 }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity 
-  //   onPress={() => {
-  //     navigation.navigate("DrugStore", {
-  //       id, 
-  //       adddress,
-  // email,
-  // username,
-  //     })
-    // }}
+    onPress={() => {
+      navigation.navigate("Pacient", {
+        id, 
+        address,
+        email,
+        username,
+        prescribed_ingredients,
+      })
+    }}
     className="bg-white mr-3 shadow items-center">
       <UserIcon
         size={50}

@@ -12,7 +12,6 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   UserIcon,
-  ChevronDownIcon,
   AdjustmentsIcon,
   SearchIcon,
   LogoutIcon,
@@ -74,7 +73,7 @@ const MainScreen = () => {
         <View className="flex-1">
           <Text className="font-bold text-xl">
             Hello Doc
-            <PlusIcon size={20} color="#348CEB" />
+            <PlusIcon size={20} color="red" />
           </Text>
         </View>
         {!currentUser ? (
@@ -97,7 +96,12 @@ const MainScreen = () => {
           <SearchIcon color="grey" size={20} />
           <TextInput placeholder="Search for a pacient" keyboardType="default" />
         </View>
-        <AdjustmentsIcon color="#348CEB" />
+        <TouchableOpacity
+          // onPress=
+        >
+          <PlusIcon color="#348CEB" />
+        </TouchableOpacity>
+        
       </View>
       <View className="items-center">
       {!!currentUser && currentUser.isDoctor ? (
@@ -126,6 +130,7 @@ const MainScreen = () => {
           address={pacient.pacient.address}
           email={pacient.pacient.email}
           username={pacient.pacient.username}
+          prescribed_ingredients={pacient.pacient.prescribed_ingredients}
         />
         ))}
       </ScrollView>
