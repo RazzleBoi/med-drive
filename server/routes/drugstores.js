@@ -43,7 +43,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 
 
 // GET
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyToken, async (req, res) => {
     try {
         const drugstore = await Drugstore.findById(req.params.id).populate({path: "meds", model: "Medicine"});
         res.status(200).json(drugstore);

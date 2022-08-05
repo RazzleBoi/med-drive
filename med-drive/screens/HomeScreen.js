@@ -17,18 +17,16 @@ import {
   SearchIcon,
   LogoutIcon,
 } from "react-native-heroicons/outline";
-import { auth } from "../firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUser, setUser } from "../slices/userSlice";
-import axios from "axios";
 import DrugStoreCard from "../components/DrugStoreCard";
+import { publicRequest, userRequest } from "../requestMethods";
+import { logoutCall } from "../slices/apiCalls";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const currentUser = useSelector(selectCurrentUser);
   const [drugstores, setDrugstores] = useState([]);
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -37,28 +35,10 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-      if (!authUser) {
-        navigation.navigate("SignIn");
-      } else {
-        dispatch(
-          setUser({
-            email: authUser.email,
-            displayName: authUser.displayName,
-            photoUrl: authUser.photoURL,
-          })
-        );
-      }
-    });
-    return unsubscribe;
-  });
-
-  useEffect(() => {
     const getDrugstores = async () => {
       try {
-        const res = await axios.get( "http://localhost:8080/api/drugstores");
+        const res = await userRequest.get( "http://localhost:8080/api/drugstores");
         setDrugstores(res.data);
-        console.log(drugstores[1].meds);
       } catch (err) {
         console.log(err.message);
       }
@@ -67,8 +47,7 @@ const HomeScreen = () => {
   }, []);
 
   const logout = () => {
-    signOut(auth);
-    dispatch(setUser(null));
+    dispatch(logoutCall(null));
   };
 
   return (
@@ -84,7 +63,6 @@ const HomeScreen = () => {
           <Text className="font-bold text-gray-300 text-xs">Deliver now!</Text>
           <Text className="font-bold text-gray-300 text-xs">
             {" "}
-            What do you need {currentUser ? currentUser.displayName : ""}?
           </Text>
           <Text className="font-bold text-xl">
             Current location

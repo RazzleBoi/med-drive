@@ -3,17 +3,30 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        currentUser: {email: null, displayName: null, photoUrl: null},
+        currentUser: null,
+        isFetching: false,
         error: false,
     },
     reducers: {
-        setUser: (state, action) => {
+        loginStart: (state) => {
+            state.isFetching = true;
+        },
+        loginSuccess: (state, action) => {
+            state.isFetching = false;
             state.currentUser = action.payload;
-          },
+        },
+        loginFailure: (state) => {
+            state.isFetching = false;
+            state.error = true;
+        },
+        resetError: (state) => {
+            state.error = false;
+        },
+        logout: (state) => {
+            state.currentUser = null;
+        }
     },
 });
 
-export const { setUser } = userSlice.actions;
-
-export const selectCurrentUser= (state) => state.user.currentUser;
+export const { loginStart, loginSuccess, loginFailure, logout, resetError } = userSlice.actions;
 export default userSlice.reducer;

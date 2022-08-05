@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-
+const morgan = require("morgan");
 
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/authentification");
@@ -17,6 +17,9 @@ const app = express();
 const PORT = 8080;
 app.use(express.json());
 app.use(cors());
+
+// #FOR logging requests
+app.use(morgan('combined'));
 
 mongoose.connect(
   process.env.MONGO_URL

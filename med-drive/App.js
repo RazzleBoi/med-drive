@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import { app } from "./firebase";
 
 import HomeScreen from "./screens/HomeScreen";
 import DrugStoreScreen from "./screens/DrugStoreScreen";

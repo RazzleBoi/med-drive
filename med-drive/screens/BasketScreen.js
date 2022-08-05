@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectDrugstore } from "../slices/drugstoreSlice";
 import { removeFromBasket, selectBasketItems, selectBasketTotal } from "../slices/basketSlice";
 import { XCircleIcon } from "react-native-heroicons/solid";
-import { urlFor } from "../sanity";
 
 const BasketScreen = () => {
   const navigation = useNavigation();

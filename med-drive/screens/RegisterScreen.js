@@ -13,8 +13,6 @@ import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTogglePasswordVisibility } from '../hooks/useTogglePasswordVisibility';
 import { EyeIcon } from "react-native-heroicons/outline";
-import { Auth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
 
 const RegisterScreen = () => {
   const navigator = useNavigation();
@@ -28,17 +26,6 @@ const RegisterScreen = () => {
   
   
   const register = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((authUser) => {
-      console.log(name)
-      console.log(imageUrl)
-      updateProfile( authUser.user, {
-        displayName: name,
-        photoURL: imageUrl || "https://image.shutterstock.com/image-vector/user-profile-group-outline-icon-260nw-598085921.jpg",
-
-      });
-    })
-    .catch((err) => Alert.alert(err.message));
   };
 
   return (

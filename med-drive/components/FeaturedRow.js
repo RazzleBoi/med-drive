@@ -2,30 +2,12 @@ import { View, Text, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 import DrugStoreCard from "./DrugStoreCard";
-import sanityClient from "../sanity";
 
 const FeaturedRow = ({ id, title, description, featuredCategory }) => {
   const [drugstores, setDrugstores] = useState([]);
 
   useEffect(() => {
-    sanityClient.fetch(
-      `
-    *[_type == "featured" && _id == $id] {
-      ...,
-      drugstores[]->{
-        ...,
-        meds[]->,
-        type -> {
-          name,
-        },
-      }
-    }[0]
-    `,
-      { id }
-    )
-    .then((data) => {
-      setDrugstores(data?.drugstores);
-    });
+    
   }, []);
 
   return (

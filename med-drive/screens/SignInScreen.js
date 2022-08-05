@@ -1,31 +1,29 @@
 import { View, Text, StatusBar, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { UserCircleIcon } from 'react-native-heroicons/solid';
 import { KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../firebase';
 import { setUser } from '../slices/userSlice';
 import { useDispatch } from 'react-redux';
+import { login } from '../slices/apiCalls';
 const SignInScreen = () => {
   const navigator = useNavigation();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-      if (authUser) {
-        dispatch(setUser({email: authUser.email, displayName: authUser.displayName, photoUrl: authUser.photoURL}));
-        navigator.navigate("Home");
-      }
-    })
-    return unsubscribe;
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+  //     if (authUser) {
+  //       dispatch(setUser({email: authUser.email, displayName: authUser.displayName, photoUrl: authUser.photoURL}));
+  //       navigator.navigate("Home");
+  //     }
+  //   })
+  //   return unsubscribe;
+  // }, []);
 
   const signin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-    .catch((err) => Alert.alert(err.message));
+    login(dispatch, { email, password }).then(() => navigator.navigate("Home")).catch(() => Alert.alert());
   };
 
   return (
