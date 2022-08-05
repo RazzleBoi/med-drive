@@ -67,7 +67,7 @@ const MainScreen = () => {
       <View className="flex-row pb-3 items-center mx-4 space-x-2 px-4">
         <Image
           source={{
-            uri: "https://thumbs.dreamstime.com/b/medicine-bag-red-suitcase-first-aid-items-isolated-white-background-vector-illustration-cartoon-style-medicine-bag-red-181220744.jpg",
+            uri: "https://t4.ftcdn.net/jpg/02/29/53/11/240_F_229531197_jmFcViuzXaYOQdoOK1qyg7uIGdnuKhpt.jpg",
           }}
           className="h-7 w-7 bg-gray-300 p-4 rounded-full"
         />
