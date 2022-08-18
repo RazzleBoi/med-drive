@@ -29,19 +29,27 @@ export const pacientsSlice = createSlice({
 
       state.pacients = newPacients;
     },
-    // addToIngredientToPacient: (state, action) => {
-    //   let pacient = state.pacients.pacients.filter((item) => item.id === action.payload.id);
-
-    // },
+    updatePrescriptionToPacient: (state, action) => {
+      const newPacients = state.pacients.map((pacient, index) => {
+        if (pacient._id == action.payload.id) {
+          let p = pacient;
+          p.prescribed_ingredients = action.payload.prescribed_ingredients;
+          return p;
+        }
+        return pacient;
+      });
+      state.pacients = newPacients;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addToPacients, removeFromPacients, setPacients } = pacientsSlice.actions;
+export const { addToPacients, removeFromPacients, setPacients, updatePrescriptionToPacient } =
+  pacientsSlice.actions;
 
-export const selectPacients= (state) => state.pacients.pacients;
+export const selectPacients = (state) => state.pacients.pacients;
 
-export const selectPacientsWithId = (state, id) =>
-  state.pacients.pacients.filter((item) => item._id === id);
+export const selectOnePacientWithId = (state, id) =>
+  state.pacients.pacients.find((item) => item._id === id);
 
 export default pacientsSlice.reducer;

@@ -18,7 +18,6 @@ import {
   SearchIcon,
   LogoutIcon,
   PlusIcon,
-  XCircleIcon,
   ArrowLeftIcon,
 } from "react-native-heroicons/outline";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +31,7 @@ import {
   selectPacients,
   setPacients,
 } from "../../slices/pacientsSlice";
+import { XCircleIcon } from "react-native-heroicons/solid";
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -62,9 +62,8 @@ const MainScreen = () => {
             { params: { doctor: currentUser._id } }
           );
           dispatch(setPacients(res.data));
-          console.log(pacients);
         } catch (err) {
-          console.log(err.message);
+          Alert.alert(err.message);
         }
       };
       getPacients();
@@ -79,11 +78,9 @@ const MainScreen = () => {
           { doctor: currentUser._id, pacient_email: email }
         );
         dispatch(addToPacients(res.data));
-        console.log(res);
-        console.log(pacients);
         setModalOpen(false);
       } catch (err) {
-        console.log(err.message);
+        Alert.alert(err.message);
       }
     };
     addPacient();
@@ -97,9 +94,8 @@ const MainScreen = () => {
           { params: { id: id}}
         );
         dispatch(removeFromPacients({id}));
-        console.log(pacients);
       } catch (err) {
-        console.log(err.message);
+        Alert.alert(err.message);
       }
     };
     removePacient();
@@ -182,7 +178,9 @@ const MainScreen = () => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => {setModalOpen(true);}}
+            onPress={() => {
+              setModalOpen(true);
+            }}
           >
             <PlusIcon color="#348CEB" />
           </TouchableOpacity>
@@ -207,27 +205,30 @@ const MainScreen = () => {
             paddingTop: 10,
           }}
           showsHorizontalScrollIndicator={false}
-          className="pt-4"
+          className="pt-4 justify-items-end jus"
         >
           {pacients.map((pacient) => (
             <>
               <PacientCard
                 key={pacient.pacient._id}
-                id={pacient.pacient._id}
+                id={pacient._id}
                 address={pacient.pacient.address}
                 email={pacient.pacient.email}
                 username={pacient.pacient.username}
                 prescribed_ingredients={pacient.prescribed_ingredients}
               />
-              <TouchableOpacity
-                key={pacient._id}
-                className="bg-white border p-2 m-2 border-[#348CEB] w-20 rounded-full"
-                onPress={() => {
-                  deletePacient(pacient._id);
-                }}
-              >
-                <XCircleIcon size={20} />
-              </TouchableOpacity>
+              <View
+              className="items-end">
+                <TouchableOpacity
+                  key={pacient._id}
+                  className="bg-white border p-2 m-2 border-[#348CEB] w-20 rounded-full"
+                  onPress={() => {
+                    deletePacient(pacient._id);
+                  }}
+                >
+                  <XCircleIcon size={20} />
+                </TouchableOpacity>
+              </View>
             </>
           ))}
         </ScrollView>

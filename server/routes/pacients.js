@@ -21,6 +21,28 @@ router.delete("/:id", verifyTokenAndDoctor, async (req, res) => {
   }
 });
 
+// PUT
+router.put("/:id", verifyTokenAndDoctor, async (req, res) => {
+  try {
+    console.log(req.query);
+    console.log(req.params);
+    console.log(req.body);
+    //returns the OLD record
+    const pacient = await Pacient.findByIdAndUpdate(req.params.id, req.body);
+    if (pacient == null) res.status(400).json("Pacient non existent");
+    else {
+      console.log(pacient);
+      const populatedPacient = await pacient.populate({
+        path: "pacient",
+        model: "User",
+      });
+      res.status(200).json(populatedPacient);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // GET one
 router.get("/:id", verifyTokenAndDoctor, async (req, res) => {
   try {
@@ -50,7 +72,10 @@ router.post("/", verifyTokenAndDoctor, async (req, res) => {
         doctor: req.body.doctor,
       });
       const savedPacient = await newPacient.save();
-      const populatedPacient = await savedPacient.populate({path: "pacient", model: "User"});
+      const populatedPacient = await savedPacient.populate({
+        path: "pacient",
+        model: "User",
+      });
       console.log(savedPacient);
       res.status(200).json(savedPacient);
     }
