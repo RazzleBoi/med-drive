@@ -14,7 +14,7 @@ const StripePaymentScreen = () => {
 
   const pay = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/stripe/pay`, {
+      const response = await fetch(`${BASE_URL}stripe/pay`, {
         method: "POST",
         body: JSON.stringify({ name, amount }),
         headers: {
