@@ -24,9 +24,6 @@ router.delete("/:id", verifyTokenAndDoctor, async (req, res) => {
 // PUT
 router.put("/:id", verifyTokenAndDoctor, async (req, res) => {
   try {
-    console.log(req.query);
-    console.log(req.params);
-    console.log(req.body);
     //returns the OLD record
     const pacient = await Pacient.findByIdAndUpdate(req.params.id, req.body);
     if (pacient == null) res.status(400).json("Pacient non existent");
