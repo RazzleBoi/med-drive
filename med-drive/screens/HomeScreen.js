@@ -43,7 +43,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const getDrugstores = async () => {
       try {
-        const res = await userRequest(currentUser.accessToken).get( "drugstores");
+        const res = await userRequest(currentUser.accessToken).get( "drugstores?user_id="+currentUser._id);
         setDrugstores(res.data);
       } catch (err) {
         console.log(err.message);

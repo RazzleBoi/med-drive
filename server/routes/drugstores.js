@@ -1,6 +1,8 @@
 const {verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin} = require("./verifyToken");
 const router = require("express").Router();
 const Drugstore = require("../models/Drugstore");
+const User = require("../models/User");
+const Pacient = require("../models/Pacient");
 
 // CREATE
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
@@ -56,11 +58,12 @@ router.get("/:id", verifyToken, async (req, res) => {
 
 // GET ALL PRODUCTS
 router.get("/", async (req, res) => {
-    const qNew = req.query.new;
     const qCategory = req.query.category;
+    const qCurrentUserId = req.query.user_id;
+    const currentUser = await User.findById(qCurrentUserId);
     try {
         let drugstores;
-        if (qNew) {
+        if (currentUser.isAdmin || currentUser.isDoctor) {
             if (!qCategory) {
                 drugstores = await Drugstore.find().populate({path: "meds", model: "Medicine"}).sort({_id: -1}).limit(5);
             }
@@ -73,8 +76,12 @@ router.get("/", async (req, res) => {
             }
         }
        else {
+        const prescriptions = await (await Pacient.find({pacient: qCurrentUserId})
+            .select('prescribed_ingredients'))
+            .reduce((arr, elem) => arr.concat(elem.prescribed_ingredients), []);
+        console.log(prescriptions);
             if (!qCategory) {
-                drugstores = await Drugstore.find().populate({path: "meds", model: "Medicine"});
+                drugstores = await Drugstore.find().populate({path: "meds", model: "Medicine", match: {active_ingredient: prescriptions}});
             }
             else {
                 drugstores = await Drugstore.find({
