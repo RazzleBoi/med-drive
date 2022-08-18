@@ -26,6 +26,8 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [drugstores, setDrugstores] = useState([]);
+  const [displayedDrugstores, setDisplayedDrugstores] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const currentUser = useSelector((state) => state.user.currentUser);
 
   useLayoutEffect(() => {
@@ -45,6 +47,7 @@ const HomeScreen = () => {
       try {
         const res = await userRequest(currentUser.accessToken).get( "drugstores?user_id="+currentUser._id);
         setDrugstores(res.data);
+        setDisplayedDrugstores(res.data);
       } catch (err) {
         console.log(err.message);
       }
@@ -54,6 +57,15 @@ const HomeScreen = () => {
 
   const logout = () => {
     logoutCall(dispatch);
+  };
+
+  const updateSearch =(text) => {
+    setSearchTerm(text);
+    if (text) {
+      setDisplayedDrugstores(drugstores.filter(drugstore => drugstore.title.startsWith(text)));
+    }
+    else
+      setDisplayedDrugstores(drugstores);
   };
 
   return (
@@ -93,7 +105,11 @@ const HomeScreen = () => {
       <View className="flex-row items-center space-x-2 pb-2 mx-4 px-1">
         <View className="flex-row space-x-1 flex-1 bg-gray-200 p-3">
           <SearchIcon color="grey" size={20} />
-          <TextInput placeholder="Meds or Drugstores" keyboardType="default" />
+          <TextInput
+          placeholder="Meds or Drugstores" 
+          keyboardType="default" 
+          value={searchTerm}
+          onChangeText={(text) => updateSearch(text)} />
         </View>
         <AdjustmentsIcon color="#00CCBB" />
       </View>
@@ -117,7 +133,7 @@ const HomeScreen = () => {
         showsHorizontalScrollIndicator={false}
         className="pt-4"
       >
-        {drugstores.map(drugstore => (
+        {displayedDrugstores.map(drugstore => (
           <DrugStoreCard
           key={drugstore._id}
           id={drugstore._id}

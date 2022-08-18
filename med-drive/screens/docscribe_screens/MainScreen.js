@@ -38,6 +38,8 @@ const MainScreen = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const pacients = useSelector(selectPacients);
+  const [displayedPacients, setDisplayedPacients] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const currentUser = useSelector((state) => state.user.currentUser);
   const [email, setEmail] = useState("");
 
@@ -52,6 +54,11 @@ const MainScreen = () => {
       navigation.navigate("SignIn");
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    setDisplayedPacients(pacients);
+    setSearchTerm("");
+  }, [pacients]);
 
   useEffect(() => {
     if (!!currentUser) {
@@ -103,6 +110,14 @@ const MainScreen = () => {
 
   const logout = () => {
     logoutCall(dispatch);
+  }
+  const updateSearch =(text) => {
+    setSearchTerm(text);
+    if (text) {
+      setDisplayedPacients(pacients.filter(pacient => pacient.pacient.username.startsWith(text)));
+    }
+    else
+      setDisplayedPacients(pacients);
   };
 
   return (
@@ -175,6 +190,9 @@ const MainScreen = () => {
             <TextInput
               placeholder="Search for a pacient"
               keyboardType="default"
+              value={searchTerm}
+              onChangeText={(text) => updateSearch(text)}
+              autoCapitalize={"none"}
             />
           </View>
           <TouchableOpacity
@@ -207,7 +225,7 @@ const MainScreen = () => {
           showsHorizontalScrollIndicator={false}
           className="pt-4 justify-items-end jus"
         >
-          {pacients.map((pacient) => (
+          {displayedPacients.map((pacient) => (
             <>
               <PacientCard
                 key={pacient.pacient._id}
