@@ -7,14 +7,10 @@ export const login = async (dispatch, user) => {
     try {
         const res = await publicRequest.post("authentication/login", user);
         dispatch(loginSuccess(res.data));
-        // const cart = await publicRequest.get("cart/user/" + res.data._id);
-        // if (cart.data !== null) {
-        //     for (let product of cart.data.products) {
-        //         dispatch(addProduct(product));
-        //     }
-        // }
+        return res.data;
     } catch (err) {
         dispatch(loginFailure());
+        return null;
     }
 };
 

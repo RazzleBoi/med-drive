@@ -5,6 +5,7 @@ import { KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { login } from '../slices/apiCalls';
+import { BASE_URL } from '../requestMethods';
 const SignInScreen = () => {
   const navigator = useNavigation();
   const dispatch = useDispatch();
@@ -18,9 +19,14 @@ const SignInScreen = () => {
   }, []);
 
   const signin = () => {
+    console.log(BASE_URL);
     login(dispatch, { email, password })
-    .then(() => {
-      navigator.navigate("Home");})
+    .then((value) => {
+      if(value == null)
+        Alert.alert("Invalid comibnation");
+      else
+        navigator.navigate("Home");
+      })
     .catch((err) => Alert.alert(err.message));
   };
 

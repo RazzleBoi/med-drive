@@ -58,7 +58,7 @@ const MainScreen = () => {
       const getPacients = async () => {
         try {
           const res = await userRequest(currentUser.accessToken).get(
-            "http://localhost:8080/api/pacients/",
+            "pacients/",
             { params: { doctor: currentUser._id } }
           );
           dispatch(setPacients(res.data));
@@ -74,7 +74,7 @@ const MainScreen = () => {
     const addPacient = async () => {
       try {
         const res = await userRequest(currentUser.accessToken).post(
-          "http://localhost:8080/api/pacients/",
+          "pacients/",
           { doctor: currentUser._id, pacient_email: email }
         );
         dispatch(addToPacients(res.data));
@@ -90,7 +90,7 @@ const MainScreen = () => {
     const removePacient = async () => {
       try {
         const res = await userRequest(currentUser.accessToken).delete(
-          "http://localhost:8080/api/pacients/:id",
+          "pacients/:id",
           { params: { id: id}}
         );
         dispatch(removeFromPacients({id}));

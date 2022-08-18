@@ -4,6 +4,7 @@ import { useStripe } from "@stripe/stripe-react-native";
 import { useSelector } from "react-redux";
 import { selectBasketTotal } from "../slices/basketSlice";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_URL } from "../requestMethods";
 
 const StripePaymentScreen = () => {
   const navigation = useNavigation();
@@ -13,7 +14,7 @@ const StripePaymentScreen = () => {
 
   const pay = async () => {
     try {
-      const response = await fetch("http:localhost:8080/api/stripe/pay", {
+      const response = await fetch(`${BASE_URL}/stripe/pay`, {
         method: "POST",
         body: JSON.stringify({ name, amount }),
         headers: {

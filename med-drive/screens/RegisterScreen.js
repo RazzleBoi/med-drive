@@ -38,11 +38,8 @@ const RegisterScreen = () => {
         username: username,
         password: password,
       })
-      // .then(() => navigator.navigate("Home"))
+      .then(() => navigator.navigate("Home"))
       .catch((err) => Alert.alert(err));
-      // .then(() => {
-      //   login(dispatch, {username, password}).then(() => navigator.navigate("Home"));
-      // }).catch((err) => Alert.alert(err));
     }
   };
 

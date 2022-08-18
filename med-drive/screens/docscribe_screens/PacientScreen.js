@@ -23,7 +23,6 @@ import {
   StarIcon,
   UserIcon,
 } from "react-native-heroicons/solid";
-import IngredientCard from "../../components/docscribe_components/IngredientCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
@@ -79,7 +78,7 @@ const PacientScreen = () => {
         let arr = [];
         for (let k in changedIngredients) arr.push(changedIngredients[k]);
         const res = await userRequest(currentUser.accessToken).put(
-          `http://localhost:8080/api/pacients/${id}`,
+          `pacients/${id}`,
           { prescribed_ingredients: arr }
         );
         dispatch(

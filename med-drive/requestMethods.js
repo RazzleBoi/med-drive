@@ -1,6 +1,8 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
-const BASE_URL = "http://localhost:8080/api/";
+import Constants from "expo-constants";
+const { manifest } = Constants;
+export const BASE_URL = `http://${(typeof manifest.packagerOpts === 'object') && manifest.packagerOpts.dev
+? manifest.debuggerHost.split(':').shift().concat(':8080'): `api.example.com`}/api/`
 // const TOKEN =
 //   JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser
 //     .accessToken || "";

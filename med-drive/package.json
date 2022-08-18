@@ -36,7 +36,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
     "tailwindcss-react-native": "^1.7.10",
-    "tipsi-stripe": "^10.0.0"
+    "tipsi-stripe": "^10.0.0",
+    "expo-constants": "~13.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
