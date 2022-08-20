@@ -62,7 +62,7 @@ const HomeScreen = () => {
   const updateSearch =(text) => {
     setSearchTerm(text);
     if (text) {
-      setDisplayedDrugstores(drugstores.filter(drugstore => drugstore.title.startsWith(text)));
+      setDisplayedDrugstores(drugstores.filter(drugstore => drugstore.title.includes(text)));
     }
     else
       setDisplayedDrugstores(drugstores);
