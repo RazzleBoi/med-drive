@@ -34,7 +34,7 @@ const SignInScreen = () => {
     <KeyboardAvoidingView behavior='padding' className="flex-1 justify-items-center bg-white-300 items-center py-5">
       <StatusBar className="bg-[#00CCBB]"/>
       <UserCircleIcon size={200} color="#00CCBB" />
-      <Text>SignInScreen</Text>
+      <Text>Sign in</Text>
       <View>
         <TextInput className="w-60 bg-white border p-2 m-2 border-[#00CCBB]" onChangeText={(text) => {setEmail(text);} }  placeholder="Email" autofocus autoCapitalize={"none"} type="email" value={email}/>
         <TextInput className="w-60 bg-white border p-2 m-2 border-[#00CCBB]" placeholder="Password" secureTextEntry type="password" values={password} onChangeText={text => setPassword(text)}/>

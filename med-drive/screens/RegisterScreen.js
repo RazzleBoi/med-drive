@@ -50,7 +50,7 @@ const RegisterScreen = () => {
     >
       <StatusBar className="bg-[#00CCBB]" />
       <UserCircleIcon size={200} color="#00CCBB" />
-      <Text>SignInScreen</Text>
+      <Text>Register</Text>
       <View>
         <TextInput
           className="w-60 h-10 bg-white border p-2 m-2 border-[#00CCBB]"

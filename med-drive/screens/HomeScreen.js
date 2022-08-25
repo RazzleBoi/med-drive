@@ -80,7 +80,7 @@ const HomeScreen = () => {
         <View className="flex-1">
           <Text className="font-bold text-gray-300 text-xs">Deliver now!</Text>
           <Text className="font-bold text-gray-300 text-xs">
-            {" "}
+            {currentUser ? currentUser.username : " "}
           </Text>
           <Text className="font-bold text-xl">
             Current location

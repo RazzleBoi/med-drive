@@ -165,7 +165,7 @@ const MainScreen = () => {
           />
           <View className="flex-1">
             <Text className="font-bold text-xl">
-              Hello Doc
+              Hello Doc {currentUser ? currentUser.username : " "}
               <PlusIcon size={20} color="red" />
             </Text>
           </View>
