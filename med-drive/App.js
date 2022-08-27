@@ -17,7 +17,7 @@ import MainScreen from "./screens/docscribe_screens/MainScreen";
 import PacientScreen from "./screens/docscribe_screens/PacientScreen";
 
 const Stack = createNativeStackNavigator();
-
+console.disableYellowBox = true;
 const AuthScreensOptions = {
   headerStyle: {backgroundColor: "#00CCBB"},
   headerTitleStyle: {color: "white"},
